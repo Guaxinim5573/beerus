@@ -13,12 +13,12 @@ echo ...
 
 ## Ping Pong Example
 ```ts
-import  { Client, GatewayIntentBits }  from  "./lib/index"
+import { Client, GatewayIntentBits } from "beerus"
 
 const client = new Client({
   token: "123",
   gateway: {
-    intents: GatewayIntentBits.GuildMessages  |  GatewayIntentBits.MessageContent
+    intents: GatewayIntentBits.GuildMessages | GatewayIntentBits.MessageContent
   }
 })
 client.once("ready", shard => {
