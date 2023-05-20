@@ -22,7 +22,7 @@ const client = new Client({
   }
 })
 client.once("ready", shard => {
-  console.log("Shard " + shard + " is ready!")
+  console.log("Shard " + shard.id + " is ready!")
 })
 
 client.on("messageCreate", message => {
