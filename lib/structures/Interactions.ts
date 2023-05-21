@@ -79,3 +79,5 @@ export class AutocompleteInteraction extends BaseInteraction<InteractionType.App
     }
 }
 export class ChatCommandInteraction extends BaseInteraction<InteractionType.ApplicationCommand, APIChatInputApplicationCommandInteractionData> {}
+
+export type AnyInteraction = MessageComponentInteraction | AutocompleteInteraction | ChatCommandInteraction

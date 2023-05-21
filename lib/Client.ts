@@ -2,7 +2,7 @@ import { API, GatewayDispatchEvents, RESTPutAPIApplicationCommandsJSONBody, Clie
 import { REST, RESTOptions } from "@discordjs/rest"
 import { OptionalWebSocketManagerOptions, RequiredWebSocketManagerOptions, WebSocketManager, WebSocketShardEvents } from "@discordjs/ws"
 import EventEmitter from "events"
-import { AutocompleteInteraction, BaseInteraction, ChatCommandInteraction, MessageComponentInteraction } from "./structures/Interactions.js"
+import { AnyInteraction, AutocompleteInteraction, BaseInteraction, ChatCommandInteraction, MessageComponentInteraction } from "./structures/Interactions.js"
 import { Message } from "./structures/Message.js"
 import User from "./structures/User.js"
 
@@ -11,8 +11,6 @@ interface ClientOptions {
     rest?: Partial<RESTOptions>
     gateway: Omit<Partial<OptionalWebSocketManagerOptions> & RequiredWebSocketManagerOptions, "token" | "rest">
 }
-
-type AnyInteraction = ChatCommandInteraction | MessageComponentInteraction
 
 export interface Client {
     on(event: "ready", listener: (shard: Shard) => void): this
