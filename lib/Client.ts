@@ -8,7 +8,7 @@ import User from "./structures/User.js"
 
 interface ClientOptions {
     token: string
-    rest: Partial<RESTOptions>
+    rest?: Partial<RESTOptions>
     gateway: Omit<Partial<OptionalWebSocketManagerOptions> & RequiredWebSocketManagerOptions, "token" | "rest">
 }
 
@@ -52,7 +52,7 @@ export class Client extends EventEmitter {
 
     constructor(options: ClientOptions) {
         super()
-        this.rest = new REST(Object.assign({ version: "10" }, options.rest)).setToken(options.token)
+        this.rest = new REST(Object.assign({ version: "10" }, options.rest || {})).setToken(options.token)
         this.gateway = new WebSocketManager(Object.assign(options.gateway, { token: options.token, rest: this.rest }))
         this.api = new API(this.rest)
         this.coreClient = new CoreClient({ rest: this.rest, gateway: this.gateway })
@@ -77,7 +77,6 @@ export class Client extends EventEmitter {
         this.coreClient.on(GatewayDispatchEvents.InteractionCreate, (event) => {
             if(event.data.type === InteractionType.ApplicationCommand) {
                 if(event.data.data.type === ApplicationCommandType.ChatInput) {
-                    console.log(JSON.stringify(event.data, null, "  "))
                     // TODO:
                     // @ts-expect-error
                     this.emit("interactionCreate", new BaseInteraction(event.data, this) as ChatCommandInteraction)
