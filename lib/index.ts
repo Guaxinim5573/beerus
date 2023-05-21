@@ -1,4 +1,8 @@
-export { GatewayIntentBits, InteractionType } from "@discordjs/core"
+export {
+    ApplicationCommandOptionType,
+    GatewayIntentBits,
+    InteractionType
+} from "@discordjs/core"
 
 export * from "./Client.js"
 

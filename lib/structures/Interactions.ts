@@ -1,4 +1,4 @@
-import { APIActionRowComponent, APIApplicationCommandInteractionData, APIBaseInteraction, APIChatInputApplicationCommandInteractionData, APIMessageComponentInteraction, APIMessageComponentInteractionData, APITextInputComponent, InteractionType } from "@discordjs/core"
+import { APIActionRowComponent, APIApplicationCommandAutocompleteInteraction, APIBaseInteraction, APIChatInputApplicationCommandInteractionData, APICommandAutocompleteInteractionResponseCallbackData, APIMessageComponentInteraction, APIMessageComponentInteractionData, APITextInputComponent, InteractionType } from "@discordjs/core"
 import { Client } from "../Client.js"
 import { CreateMessageOptions, TextChannel } from "./Channel.js"
 import { Message } from "./Message.js"
@@ -65,4 +65,17 @@ export class MessageComponentInteraction extends BaseInteraction<InteractionType
     }
 }
 
+export type AutocompleteInteractionData = APIChatInputApplicationCommandInteractionData & Required<Pick<APIChatInputApplicationCommandInteractionData, "options">>
+export class AutocompleteInteraction extends BaseInteraction<InteractionType.ApplicationCommandAutocomplete, APIChatInputApplicationCommandInteractionData> {
+    readonly data: AutocompleteInteractionData
+
+    constructor(data: APIApplicationCommandAutocompleteInteraction, _client: Client) {
+        super(data, _client)
+        this.data = data.data
+    }
+
+    respond(data: APICommandAutocompleteInteractionResponseCallbackData) {
+        return this._client.api.interactions.createAutocompleteResponse(this.id, this.token, data)
+    }
+}
 export class ChatCommandInteraction extends BaseInteraction<InteractionType.ApplicationCommand, APIChatInputApplicationCommandInteractionData> {}

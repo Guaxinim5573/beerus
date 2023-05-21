@@ -2,7 +2,7 @@ import { API, GatewayDispatchEvents, RESTPutAPIApplicationCommandsJSONBody, Clie
 import { REST, RESTOptions } from "@discordjs/rest"
 import { OptionalWebSocketManagerOptions, RequiredWebSocketManagerOptions, WebSocketManager, WebSocketShardEvents } from "@discordjs/ws"
 import EventEmitter from "events"
-import { BaseInteraction, ChatCommandInteraction, MessageComponentInteraction } from "./structures/Interactions.js"
+import { AutocompleteInteraction, BaseInteraction, ChatCommandInteraction, MessageComponentInteraction } from "./structures/Interactions.js"
 import { Message } from "./structures/Message.js"
 import User from "./structures/User.js"
 
@@ -77,11 +77,11 @@ export class Client extends EventEmitter {
         this.coreClient.on(GatewayDispatchEvents.InteractionCreate, (event) => {
             if(event.data.type === InteractionType.ApplicationCommand) {
                 if(event.data.data.type === ApplicationCommandType.ChatInput) {
-                    // TODO:
                     // @ts-expect-error
-                    this.emit("interactionCreate", new BaseInteraction(event.data, this) as ChatCommandInteraction)
+                    this.emit("interactionCreate", new ChatCommandInteraction(event.data, this))
                 }
             } else if(event.data.type === InteractionType.ApplicationCommandAutocomplete) {
+                this.emit("interactionCreate", new AutocompleteInteraction(event.data, this))
             } else if(event.data.type === InteractionType.MessageComponent) {
                 this.emit("interactionCreate", new MessageComponentInteraction(event.data, this))
             }
