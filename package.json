@@ -1,6 +1,6 @@
 {
   "name": "beerus",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Node.js Discord library focused on having less",
   "type": "module",
   "main": "./dist/index.js",
