@@ -2,7 +2,7 @@ import { API, GatewayDispatchEvents, RESTPutAPIApplicationCommandsJSONBody, Clie
 import { REST, RESTOptions } from "@discordjs/rest"
 import { OptionalWebSocketManagerOptions, RequiredWebSocketManagerOptions, WebSocketManager, WebSocketShardEvents } from "@discordjs/ws"
 import EventEmitter from "events"
-import { AnyInteraction, AutocompleteInteraction, BaseInteraction, ChatCommandInteraction, MessageComponentInteraction } from "./structures/Interactions.js"
+import { AnyInteraction, AutocompleteInteraction, BaseInteraction, ChatCommandInteraction, MessageComponentInteraction, ModalInteraction } from "./structures/Interactions.js"
 import { Message } from "./structures/Message.js"
 import User from "./structures/User.js"
 
@@ -82,6 +82,8 @@ export class Client extends EventEmitter {
                 this.emit("interactionCreate", new AutocompleteInteraction(event.data, this))
             } else if(event.data.type === InteractionType.MessageComponent) {
                 this.emit("interactionCreate", new MessageComponentInteraction(event.data, this))
+            } else if(event.data.type === InteractionType.ModalSubmit) {
+                this.emit("interactionCreate", new ModalInteraction(event.data, this))
             }
         })
     }
